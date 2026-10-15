@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KnotCraft: Macramé & Cord Art Studio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="m15 9-6 6"/>
+                <path d="m9 9 6 6"/>
+            </svg>
+            <h1>KnotCraft</h1>
+        </div>
+        <div class="header-actions">
+            <button id="btn-new" class="btn secondary">New Pattern</button>
+            <button id="btn-calc" class="btn primary">Calculate Cord & Summary</button>
+            <button id="btn-export" class="btn secondary">Export JSON</button>
+        </div>
+    </header>
+
+    <main class="app-workspace">
+        <!-- Left Sidebar: Toolbox / Knot Library -->
+        <aside class="sidebar toolbox">
+            <section class="tool-section">
+                <h2>Knot Library</h2>
+                <p class="hint">Drag knots onto the canvas grid or click to add.</p>
+                <div class="knot-list">
+                    <div class="knot-item" draggable="true" data-type="square" data-name="Square Knot" data-length="4">
+                        <div class="knot-icon square"></div>
+                        <div class="knot-info">
+                            <span class="name">Square Knot</span>
+                            <span class="meta">Uses 4 cords (2 working, 2 filler)</span>
+                        </div>
+                    </div>
+                    <div class="knot-item" draggable="true" data-type="half-hitch" data-name="Half Hitch" data-length="2">
+                        <div class="knot-icon hitch"></div>
+                        <div class="knot-info">
+                            <span class="name">Half Hitch (Diagonal)</span>
+                            <span class="meta">Creates structured lines</span>
+                        </div>
+                    </div>
+                    <div class="knot-item" draggable="true" data-type="spiral" data-name="Spiral Knot" data-length="4">
+                        <div class="knot-icon spiral"></div>
+                        <div class="knot-info">
+                            <span class="name">Spiral / Half Knot</span>
+                            <span class="meta">Twists naturally</span>
+                        </div>
+                    </div>
+                    <div class="knot-item" draggable="true" data-type="gathering" data-name="Gathering Knot" data-length="1">
+                        <div class="knot-icon gathering"></div>
+                        <div class="knot-info">
+                            <span class="name">Gathering Knot</span>
+                            <span class="meta">Secures tassel bundles</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tool-section">
+                <h2>Cord Properties</h2>
+                <div class="form-group">
+                    <label for="cord-color">Cord Color</label>
+                    <input type="color" id="cord-color" value="#d4a373">
+                </div>
+                <div class="form-group">
+                    <label for="cord-thickness">Cord Thickness (mm)</label>
+                    <select id="cord-thickness">
+                        <option value="3">3mm (Fine)</option>
+                        <option value="4" selected>4mm (Standard)</option>
+                        <option value="5">5mm (Chunky)</option>
+                        <option value="6">6mm (Roving)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="grid-width">Canvas Columns</label>
+                    <input type="range" id="grid-width" min="3" max="9" value="5">
+                    <span id="grid-width-val">5 cols</span>
+                </div>
+            </section>
+        </aside>
+
+        <!-- Center: Design Canvas -->
+        <section class="canvas-container">
+            <div class="canvas-toolbar">
+                <span id="project-title" contenteditable="true">My Macramé Wall Hanging</span>
+                <div class="canvas-zoom">
+                    <button id="btn-zoom-in" title="Zoom In">+</button>
+                    <button id="btn-zoom-out" title="Zoom Out">-</button>
+                </div>
+            </div>
+            <div class="canvas-scroll-area">
+                <div id="design-canvas" class="design-canvas">
+                    <!-- Rows rendered dynamically -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Sidebar: Properties & Inspector -->
+        <aside class="sidebar inspector">
+            <h2>Node Inspector</h2>
+            <div id="inspector-content" class="inspector-content">
+                <p class="empty-state">Select a knot on the canvas to edit its properties, color, or delete it.</p>
+            </div>
+
+            <div class="quick-stats">
+                <h3>Project Estimate</h3>
+                <div class="stat-row">
+                    <span>Total Knots:</span>
+                    <strong id="stat-knots">0</strong>
+                </div>
+                <div class="stat-row">
+                    <span>Est. Cord Length Needed:</span>
+                    <strong id="stat-length">0 meters</strong>
+                </div>
+                <div class="stat-row">
+                    <span>Hanging Dowel Width:</span>
+                    <strong id="stat-width">30 cm</strong>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- Modal for Summary & Calculator -->
+    <div id="modal-summary" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-modal" id="btn-close-modal">&times;</button>
+            <h2>Pattern & Cord Calculator</h2>
+            <div class="summary-body" id="summary-body">
+                <!-- Populated via JS -->
+            </div>
+            <div class="modal-actions">
+                <button class="btn primary" id="btn-print">Print Blueprint</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
